@@ -67,7 +67,7 @@ int main()
 
     // 多源 BFS 初始化
     queue<pair<int, int>> q;
-    vector<vector<int>> dist(n, vector<int>(m, INT_MAX));
+    vector<vector<int>> dist(n, vector<int>(m, -1)); // 参数1：行数  参数2：每行的初始化方式，即每行m个-1
 
     // 将所有 '1' 的位置加入队列，并设置距离为 0
     for (int i = 0; i < n; i++)
@@ -87,6 +87,8 @@ int main()
     int dy[] = {0, 1, 0, -1};
 
     // 多源 BFS
+    // 曼哈顿距离的实质：就是在地图模型下，两点间需要的步数
+    // 因此 可以以1为起点，进行多源BFS，求出每个点到1的最短距离，保存在dist数组中
     while (!q.empty())
     {
         auto t = q.front();
@@ -99,7 +101,7 @@ int main()
 
             if (a < 0 || a >= n || b < 0 || b >= m)
                 continue;
-            if (dist[a][b] != INT_MAX)
+            if (dist[a][b] != -1)
                 continue;
 
             dist[a][b] = dist[t.first][t.second] + 1;
