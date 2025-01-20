@@ -91,15 +91,11 @@ void dfs(int x, int y)
 
         // 检查边界条件
         if (nextX < 1 || nextX > n || nextY < 1 || nextY > m)
-        {
             continue; // 越界，跳过
-        }
 
         // 检查是否为水坑且未访问过
         if (map[nextX][nextY] == 'W' && !vis[nextX][nextY])
-        {
             dfs(nextX, nextY); // 递归搜索
-        }
     }
 }
 
@@ -109,12 +105,8 @@ int main()
 
     // 读入地图
     for (int i = 1; i <= n; i++)
-    {
         for (int j = 1; j <= m; j++)
-        {
             cin >> map[i][j];
-        }
-    }
 
     // 遍历整个地图
     for (int i = 1; i <= n; i++)

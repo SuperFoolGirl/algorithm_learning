@@ -91,3 +91,60 @@ int main()
 
 
 // 正确解法是BFS
+#include <iostream>
+#include <queue>
+#include <cstring>
+using namespace std;
+#define maxn 210
+
+int n, a, b;
+int dist[maxn];
+int elevator[maxn];
+int dir[] = {1, -1};
+queue<int> q;
+
+int bfs(int x)
+{
+    q.push(x);
+    dist[x] = 0;
+
+    while (!q.empty())
+    {
+        auto t = q.front();
+        q.pop();
+
+        for (int i = 0; i < 2; i++)
+        {
+            int next = t + dir[i] * elevator[t];
+
+            if (next < 1 || next > n)
+                continue;
+            if (dist[next] != -1)
+                continue;
+
+            dist[next] = dist[t] + 1;
+            if (next == b)
+                return dist[next];
+            else
+                q.push(next);
+        }
+    }
+    return -1; // 处理没有找到的情况
+}
+
+int main()
+{
+    memset(dist, -1, sizeof dist);
+    cin >> n >> a >> b;
+    for (int i = 1; i <= n; i++)
+        cin >> elevator[i];
+
+    if (a == b) // 特判
+    {
+        cout << 0;
+        return 0;
+    }
+
+    cout << bfs(a);
+    return 0;
+}
