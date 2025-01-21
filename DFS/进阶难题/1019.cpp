@@ -1,3 +1,5 @@
+// 指数型枚举
+
 #include <iostream>
 #include <string>
 #include <algorithm>

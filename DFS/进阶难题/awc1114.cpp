@@ -1,3 +1,5 @@
+// 排列型枚举
+
 // 1 我自己写的 用了两个dfs函数 完全仿照八皇后模型
 #include <iostream>
 using namespace std;

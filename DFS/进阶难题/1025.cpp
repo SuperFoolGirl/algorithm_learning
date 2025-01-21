@@ -1,6 +1,8 @@
 // 有序排列 用start
 // 注意优化
 
+// 组合型枚举
+
 #include <iostream>
 using namespace std;
 
