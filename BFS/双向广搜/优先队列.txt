@@ -1,0 +1,25 @@
+priority_queue<int> pq;  // 默认最大堆（大顶堆）
+
+头文件 #include <queue>
+
+底层实现原理
+数据结构：通过二叉堆（完全二叉树）实现
+插入元素：将新元素放到末尾，然后"上浮"调整
+删除元素：将堆顶与末尾交换，删除末尾，然后"下沉"调整
+
+
+算法类型	   适用队列	          原因
+BFS	普通队列/  双端队列	    需要保证层序的严格顺序
+Dijkstra	  优先队列	   需要优先处理距离最短的节点
+0-1 BFS	      双端队列	   边权只有0和1时优化时间复杂度
+分支限界法	   优先队列	    优先展开最有希望的候选解
+
+
+// ✅ 正确
+priority_queue<int, vector<int>, greater<int>> min_heap; // 最小堆
+// ❌ 错误（缺少参数）
+priority_queue<int, greater<int>> min_heap; 
+
+
+优先队列的方法很简单
+push是自动排序的
