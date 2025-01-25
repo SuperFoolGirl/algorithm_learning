@@ -72,3 +72,73 @@ int main()
 
 
 // 双向bfs
+#include <iostream>
+#include <queue>
+#include <unordered_map>
+using namespace std;
+
+string end1 = "123804765";
+unordered_map<string, int> dist;
+queue<string> q;
+unordered_map<string, int> vis;
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
+
+int bfs(string start)
+{
+    // 双向bfs的模板是要特判起点终点相同的！
+    if (start == end1)
+        return 0;
+
+    q.push(start);
+    q.push(end1);
+    dist[start] = 0;
+    dist[end1] = 0;
+    vis[start] = 1;
+    vis[end1] = 2;
+
+    while (!q.empty())
+    {
+        auto t = q.front();
+        q.pop();
+
+        int distance = dist[t];
+        int mark = vis[t];
+        int position_zero = t.find('0');
+        int x = position_zero / 3;
+        int y = position_zero % 3;
+
+        for (int i = 0; i < 4; i++)
+        {
+            int a = x + dx[i];
+            int b = y + dy[i];
+
+            if (a < 0 || a >= 3 || b < 0 || b >= 3)
+                continue;
+
+            int tmp = a * 3 + b;
+            swap(t[position_zero], t[tmp]);
+
+            if (vis[t] + mark == 3) // vis[t]是对面标记的，mark是队首标记的
+                return dist[t] + distance + 1;
+
+            if (!dist.count(t)) // 检查重复访问
+            {
+                dist[t] = distance + 1;
+                q.push(t);
+                vis[t] = vis[t] == 0 ? mark : vis[t];
+            }
+
+            swap(t[position_zero], t[tmp]);
+        }
+    }
+    return -1;
+}
+
+int main()
+{
+    string start;
+    cin >> start;
+    cout << bfs(start) << endl;
+    return 0;
+}
