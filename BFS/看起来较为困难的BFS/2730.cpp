@@ -155,7 +155,7 @@ void bfs()
 
         if (t.status == End)
         {
-            cout << t.ans.size() << endl;
+            cout << t.ans.length() << endl;
             cout << t.ans << endl;
             return;
         }
@@ -172,6 +172,10 @@ void bfs()
             else if (op == 'B')
                 new_status = t.status[3] + t.status.substr(0, 3) + t.status.substr(5, 3) + t.status[4];
             else
+                // 这个写法有说法，不能直接用t.status[0] + t.status[6] + ...，因为这样会把数字当成字符相加
+                // 因为全都是char类型
+                // 在string后面的char会隐式转换为string，所以首字符要改成string类型
+                // string构造函数的参数是长度、字符，所以这里用string(1, t.status[0])来构造一个长度为1的字符串
                 new_status = string(1, t.status[0]) + t.status[6] + t.status[1] + t.status[3] + t.status[4] + t.status[2] + t.status[5] + t.status[7];
 
             if (!vis.count(new_status))
@@ -189,7 +193,7 @@ int main()
     for (int i = 0; i < 8; i++)
     {
         cin >> num;
-        End += char(num + '0');
+        End += to_string(num);
     }
     bfs();
     return 0;
