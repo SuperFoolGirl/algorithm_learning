@@ -74,3 +74,122 @@ int main()
     cout << bfs() << endl;
     return 0;
 }
+
+
+
+
+// 双队列改写版
+// 双队列虽然空间复杂度大一些，但有些复杂的题目，单队列得不出结果
+#include <iostream>
+#include <queue>
+#include <string>
+#include <cstring>
+#define MAXN 1005
+using namespace std;
+
+int X1, X2, Y1, Y2;
+int n;
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
+
+int dist_forward[MAXN][MAXN];
+int dist_backward[MAXN][MAXN];
+bool visited_forward[MAXN][MAXN];
+bool visited_backward[MAXN][MAXN];
+string map[MAXN];
+queue<pair<int, int>> q_forward;
+queue<pair<int, int>> q_backward;
+
+int bfs()
+{
+    if (X1 == X2 && Y1 == Y2)
+        return 0;
+
+    memset(dist_forward, -1, sizeof dist_forward);
+    memset(dist_backward, -1, sizeof dist_backward);
+    memset(visited_forward, false, sizeof visited_forward);
+    memset(visited_backward, false, sizeof visited_backward);
+
+    // 初始化起点
+    int sx = X1 - 1, sy = Y1 - 1;
+    dist_forward[sx][sy] = 0;
+    visited_forward[sx][sy] = true;
+    q_forward.push({sx, sy});
+
+    // 初始化终点
+    int ex = X2 - 1, ey = Y2 - 1;
+    dist_backward[ex][ey] = 0;
+    visited_backward[ex][ey] = true;
+    q_backward.push({ex, ey});
+
+    while (!q_forward.empty() && !q_backward.empty())
+    {
+        // 处理起点方向的队列
+        auto t_forward = q_forward.front();
+        q_forward.pop();
+
+        for (int i = 0; i < 4; ++i)
+        {
+            int a = t_forward.first + dx[i];
+            int b = t_forward.second + dy[i];
+
+            if (a < 0 || a >= n || b < 0 || b >= n)
+                continue;
+            if (map[a][b] == '1')
+                continue;
+
+            if (!visited_forward[a][b])
+            {
+                dist_forward[a][b] = dist_forward[t_forward.first][t_forward.second] + 1;
+                visited_forward[a][b] = true;
+                q_forward.push({a, b});
+
+                // 检查是否与终点方向相遇
+                if (visited_backward[a][b])
+                {
+                    return dist_forward[a][b] + dist_backward[a][b];
+                }
+            }
+        }
+
+        // 处理终点方向的队列
+        auto t_backward = q_backward.front();
+        q_backward.pop();
+
+        for (int i = 0; i < 4; ++i)
+        {
+            int a = t_backward.first + dx[i];
+            int b = t_backward.second + dy[i];
+
+            if (a < 0 || a >= n || b < 0 || b >= n)
+                continue;
+            if (map[a][b] == '1')
+                continue;
+
+            if (!visited_backward[a][b])
+            {
+                dist_backward[a][b] = dist_backward[t_backward.first][t_backward.second] + 1;
+                visited_backward[a][b] = true;
+                q_backward.push({a, b});
+
+                // 检查是否与起点方向相遇
+                if (visited_forward[a][b])
+                {
+                    return dist_forward[a][b] + dist_backward[a][b];
+                }
+            }
+        }
+    }
+
+    return -1;
+}
+
+int main()
+{
+    cin >> n;
+    for (int i = 0; i < n; ++i)
+        cin >> map[i];
+    cin >> X1 >> Y1 >> X2 >> Y2;
+    cout << bfs() << endl;
+    return 0;
+}
