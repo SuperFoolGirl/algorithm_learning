@@ -122,65 +122,70 @@ int bfs()
     visited_backward[ex][ey] = true;
     q_backward.push({ex, ey});
 
-    while (!q_forward.empty() && !q_backward.empty())
+    while (!q_forward.empty() || !q_backward.empty()) // 只要有一个不为空就可以进入
     {
-        // 处理起点方向的队列
-        auto t_forward = q_forward.front();
-        q_forward.pop();
-
-        for (int i = 0; i < 4; ++i)
+        if (!q_forward.empty()) // 不加报错
         {
-            int a = t_forward.first + dx[i];
-            int b = t_forward.second + dy[i];
+            // 处理起点方向的队列
+            auto t_forward = q_forward.front();
+            q_forward.pop();
 
-            if (a < 0 || a >= n || b < 0 || b >= n)
-                continue;
-            if (map[a][b] == '1')
-                continue;
-
-            if (!visited_forward[a][b])
+            for (int i = 0; i < 4; ++i)
             {
-                dist_forward[a][b] = dist_forward[t_forward.first][t_forward.second] + 1;
-                visited_forward[a][b] = true;
-                q_forward.push({a, b});
+                int a = t_forward.first + dx[i];
+                int b = t_forward.second + dy[i];
 
-                // 检查是否与终点方向相遇
-                if (visited_backward[a][b])
+                if (a < 0 || a >= n || b < 0 || b >= n)
+                    continue;
+                if (map[a][b] == '1')
+                    continue;
+
+                if (!visited_forward[a][b])
                 {
-                    return dist_forward[a][b] + dist_backward[a][b];
+                    dist_forward[a][b] = dist_forward[t_forward.first][t_forward.second] + 1;
+                    visited_forward[a][b] = true;
+                    q_forward.push({a, b});
+
+                    // 检查是否与终点方向相遇
+                    if (visited_backward[a][b])
+                    {
+                        return dist_forward[a][b] + dist_backward[a][b];
+                    }
                 }
             }
         }
-
-        // 处理终点方向的队列
-        auto t_backward = q_backward.front();
-        q_backward.pop();
-
-        for (int i = 0; i < 4; ++i)
+        
+        if (!q_backward.empty())
         {
-            int a = t_backward.first + dx[i];
-            int b = t_backward.second + dy[i];
+            // 处理终点方向的队列
+            auto t_backward = q_backward.front();
+            q_backward.pop();
 
-            if (a < 0 || a >= n || b < 0 || b >= n)
-                continue;
-            if (map[a][b] == '1')
-                continue;
-
-            if (!visited_backward[a][b])
+            for (int i = 0; i < 4; ++i)
             {
-                dist_backward[a][b] = dist_backward[t_backward.first][t_backward.second] + 1;
-                visited_backward[a][b] = true;
-                q_backward.push({a, b});
+                int a = t_backward.first + dx[i];
+                int b = t_backward.second + dy[i];
 
-                // 检查是否与起点方向相遇
-                if (visited_forward[a][b])
+                if (a < 0 || a >= n || b < 0 || b >= n)
+                    continue;
+                if (map[a][b] == '1')
+                    continue;
+
+                if (!visited_backward[a][b])
                 {
-                    return dist_forward[a][b] + dist_backward[a][b];
+                    dist_backward[a][b] = dist_backward[t_backward.first][t_backward.second] + 1;
+                    visited_backward[a][b] = true;
+                    q_backward.push({a, b});
+
+                    // 检查是否与起点方向相遇
+                    if (visited_forward[a][b])
+                    {
+                        return dist_forward[a][b] + dist_backward[a][b];
+                    }
                 }
             }
         }
     }
-
     return -1;
 }
 
