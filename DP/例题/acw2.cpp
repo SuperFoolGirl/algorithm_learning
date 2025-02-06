@@ -9,7 +9,7 @@ int n, m;
 vector<int> v(MAXN, 0);
 vector<int> w(MAXN, 0);
 // 二维数组 回想bfs中对多维数组的讲解。多维数组是一个多参数映射的数据结构，因此可以简单视为多元函数
-vector<vector<int>> mem(MAXN, vector<int>(MAXN, 0));
+vector<vector<int>> mem(MAXN, vector<int>(MAXN, 0)); // mem[i][j]表示前i个物品，背包容量为j时的最大价值
 
 int dfs(int x, int restV)
 {
@@ -52,25 +52,62 @@ int main()
 
     vector<int> v(MAXN, 0);
     vector<int> w(MAXN, 0);
-    vector<vector<int>> dp(MAXN, vector<int>(MAXN, 0));
+    vector<vector<int>> dp(MAXN, vector<int>(MAXN, 0)); // dp[i][j]表示前i个物品，背包容量为j时的最大价值。意义与mem相同，注意
 
     // 输入每个物品的体积和价值
     for (int i = 1; i <= n; i++)
         cin >> v[i] >> w[i];
 
-    // 递推求解
+    // 起点已经隐性地给出了：dp[0][j] = 0
+    // 由于dp是二维数组，因此递推循环是两层
     for (int i = 1; i <= n; i++) // 遍历每个物品
     {
         for (int j = 0; j <= m; j++) // 遍历背包容量
         {
-            // 不选第i个物品。直接继承上一个状态（暂时初始化）
-            dp[i][j] = dp[i - 1][j];
             if (j >= v[i]) // 状态转移方程，反过来了
                 // 若当前背包容量能装下第 i 个物品，考虑选该物品的情况
                 dp[i][j] = max(dp[i][j], dp[i - 1][j - v[i]] + w[i]);
+            else
+                // 若当前背包容量不能装下第 i 个物品，只能不选
+                dp[i][j] = dp[i - 1][j];
         }
     }
 
-    cout << dp[n][m] << endl; // 顺序递推，出口、公式、起点都相反
+    cout << dp[n][m] << endl; // 表示考虑所有 n 个物品，背包容量为 m 时能获得的最大价值，将其输出。回顾上方的循环，第n个物品不一定选，但不妨碍dp状态的标记
+    return 0;
+}
+
+
+// 3.逆序递推
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#define MAXN 1010
+using namespace std;
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+
+    vector<int> v(MAXN, 0);
+    vector<int> w(MAXN, 0);
+    vector<vector<int>> dp(MAXN, vector<int>(MAXN, 0));
+
+    for (int i = 1; i <= n; i++)
+        cin >> v[i] >> w[i];
+
+    for (int i = n; i >= 1; i--) // 逆序遍历每个物品
+    {
+        for (int j = 0; j <= m; j++) // 正序遍历背包容量
+        {
+            if (j >= v[i])
+                dp[i][j] = max(dp[i][j], dp[i + 1][j - v[i]] + w[i]); // dp数组初始化为0了，不用担心越界
+            else
+                dp[i][j] = dp[i + 1][j];
+        }
+    }
+
+    cout << dp[1][m] << endl; // 递归搜索树的初始状态，即dfs的起点
     return 0;
 }
