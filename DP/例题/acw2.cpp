@@ -9,7 +9,7 @@ int n, m;
 vector<int> v(MAXN, 0);
 vector<int> w(MAXN, 0);
 // 二维数组 回想bfs中对多维数组的讲解。多维数组是一个多参数映射的数据结构，因此可以简单视为多元函数
-vector<vector<int>> mem(MAXN, vector<int>(MAXN, 0)); // mem[i][j]表示前i个物品，背包容量为j时的最大价值
+vector<vector<int>> mem(MAXN, vector<int>(MAXN, 0)); // mem[i][j]表示i个物品，背包容量为j 后的最大价值
 
 int dfs(int x, int restV)
 {
@@ -52,7 +52,7 @@ int main()
 
     vector<int> v(MAXN, 0);
     vector<int> w(MAXN, 0);
-    vector<vector<int>> dp(MAXN, vector<int>(MAXN, 0)); // dp[i][j]表示前i个物品，背包容量为j时的最大价值。意义与mem相同，注意
+    vector<vector<int>> dp(MAXN, vector<int>(MAXN, 0)); // dp[i][j]表示前i个物品，背包容量为j时的最大价值。意义与mem互补
 
     // 输入每个物品的体积和价值
     for (int i = 1; i <= n; i++)
