@@ -77,7 +77,7 @@ using namespace std;
 int main()
 {
     int n, m;
-    vector<vector<int>> dp(110, vector<int>(10000, 0)); // dp[i][j] = 选到第i个菜品后，花费了j元的方案数(i-n)
+    vector<vector<int>> dp(110, vector<int>(10000, 0)); // dp[i][j] = 选到第i个菜品时，花费了j元的方案数(0-i) 注意与dfs是互补的
     cin >> n >> m;
     vector<int> menu(n + 1, 0);
     for (int i = 1; i <= n; i++)
