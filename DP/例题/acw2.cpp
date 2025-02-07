@@ -58,7 +58,7 @@ int main()
     for (int i = 1; i <= n; i++)
         cin >> v[i] >> w[i];
 
-    // 起点已经隐性地给出了：dp[0][j] = 0
+    // 基准情况已经隐性地给出了：dp[0][j] = 0
     // 由于dp是二维数组，因此递推循环是两层
     for (int i = 1; i <= n; i++) // 遍历每个物品
     {
@@ -109,5 +109,41 @@ int main()
     }
 
     cout << dp[1][m] << endl; // 递归搜索树的初始状态，即dfs的起点
+    return 0;
+}
+
+
+
+// 4. 优化一维数组
+// 将二维数组 dp 优化为一维数组，通过逆序遍历背包容量，实现了滚动数组的效果
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#define MAXN 1010
+using namespace std;
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+
+    vector<int> v(n + 1, 0);
+    vector<int> w(n + 1, 0);
+    vector<int> dp(MAXN, 0); // 优化为一维数组
+
+    // 输入每个物品的体积和价值
+    for (int i = 1; i <= n; i++)
+        cin >> v[i] >> w[i];
+
+    // 动态规划过程
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = m; j >= v[i]; j--)
+        {
+            dp[j] = max(dp[j], dp[j - v[i]] + w[i]);
+        }
+    }
+
+    cout << dp[m] << endl; // 输出结果
     return 0;
 }
