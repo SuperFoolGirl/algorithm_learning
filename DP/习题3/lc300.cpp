@@ -70,7 +70,7 @@ public:
             return dp[x];
 
         dp[x] = 1;
-        for (int i = 0; i < x; i++)
+        for (int i = 0; i < x; i++) // 遍历开头 在给定区间内找最长序列
             if (nums[i] < nums[x])
                 dp[x] = max(dp[x], dfs(nums, i) + 1);
         return dp[x];
@@ -80,7 +80,7 @@ public:
     {
         int n = nums.size();
         int ans = -1;
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) // 遍历结尾
             ans = max(ans, dfs(nums, i));
         return ans;
     }
@@ -98,10 +98,10 @@ public:
         vector<int> dp(2510, 0);
         int n = nums.size();
 
-        for (int i = 0; i < n; i++) // 遍历结尾
+        for (int i = 0; i < n; i++) // 遍历结尾，即遍历dp
         {
             dp[i] = 1; // 仔细观察，不会覆盖之前的dp值
-            for (int j = 0; j < i; j++)
+            for (int j = 0; j < i; j++) // 遍历开头，以确定区间
                 if (nums[j] < nums[i])
                     dp[i] = max(dp[i], dp[j] + 1);
         }
