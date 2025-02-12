@@ -40,7 +40,7 @@ public:
         int res = 1; // 初始化结果为 1，因为每个元素自身都可以构成一个长度为 1 的递增子序列。
         for (int i = 0; i < x; i++)
             if (nums[i] < nums[x]) // 注意这个比较基准：nums[x]，来源于遍历的结尾
-                res = max(res, dfs(nums, i) + 1); // 取最值的思想我掌握得还不好
+                res = max(res, dfs(nums, i) + 1); // 取最值的思想我掌握得还不好。体会“保持原样”的意味：在遍历结尾进入不同的dfs时，对于同一个x，dp[x]会变化，我们要保留目标最值
         return res;
     }
 
@@ -70,7 +70,11 @@ public:
             return dp[x];
 
         dp[x] = 1;
-        for (int i = 0; i < x; i++) // 遍历开头 在给定区间内找最长序列
+        /*if (nums[i] < nums[x]) 检查第 i 个元素是否小于第 x 个元素，如果是，则说明可以将第 x 个元素接在以第 i 个元素结尾的递增子序列后面。dp[x] = max(dp[x], dfs(nums, i) + 1); 通过递归调用 dfs(nums, i) 计算以第 i 个元素结尾的最长递增子序列的长度，并加 1 表示接上第 x 个元素后的长度，然后取当前 dp[x] 和新长度的最大值更新 dp[x]。*/
+        // 我之前是真没看懂啊 max参数二的意思：将x接在以i结尾的递增子序列后面
+        // 但其实这的确符合五步法，去掉最后一步，在x之前的数中找到一个最长的递增子序列，然后加上1
+        // 我们虽然要找x-1，但x-1依赖x-2...最终得求出来0的 所以这里写了个for循环
+        for (int i = 0; i < x; i++)
             if (nums[i] < nums[x])
                 dp[x] = max(dp[x], dfs(nums, i) + 1);
         return dp[x];
@@ -101,7 +105,7 @@ public:
         for (int i = 0; i < n; i++) // 遍历结尾，即遍历dp
         {
             dp[i] = 1; // 仔细观察，不会覆盖之前的dp值
-            for (int j = 0; j < i; j++) // 遍历开头，以确定区间
+            for (int j = 0; j < i; j++)
                 if (nums[j] < nums[i])
                     dp[i] = max(dp[i], dp[j] + 1);
         }
