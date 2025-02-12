@@ -45,3 +45,27 @@ public:
 2. 最大区间和，dfs内不使用for循环
 在计算以第 i 个元素结尾的连续子数组的最大和时，只需要考虑它是否要和以第 i - 1 个元素结尾的连续子数组合并。因为是连续子数组，不需要考虑前面其他位置的元素，所以不需要使用 for 循环来遍历前面的元素，只需要直接根据 dp[i - 1] 来更新 dp[i] 即可。
 */
+
+
+
+
+// 2. 顺序递推
+class Solution
+{
+public:
+    int maxSubArray(vector<int> &nums)
+    {
+        int n = nums.size();
+        vector<int> dp(n + 1, -1e9);
+
+        for (int i = 0; i < n; i++)
+            dp[i + 1] = max(nums[i], dp[i] + nums[i]); // 处理0开头的数组--偏移 只有dp数组偏移1，其他不变
+
+        // 这里for循环找答案 对应dfs中main函数的for循环dfs
+        int ans = -1e9;
+        for (int i = 1; i <= n; i++) // 最后跑循环也要偏移
+            ans = max(ans, dp[i]);
+
+        return ans;
+    }
+};
