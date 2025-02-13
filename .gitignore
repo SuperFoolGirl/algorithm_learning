@@ -11,3 +11,5 @@
 *.pdb
 bin/
 obj/
+
+.gitignore
