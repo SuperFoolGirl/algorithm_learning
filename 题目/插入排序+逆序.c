@@ -28,11 +28,16 @@ node *create(int n)
 node *sort(node *head)
 {
     node *p, *p0, *r, *r0, *q;
-    p0 = NULL, p = head;
+    node *dummy =(node *)malloc(sizeof(node));
+    dummy->next = head;
+				
+    p0 = dummy, p = dummy->next;
+
     while (p)
     {
-        r = head;
-        while (r->val < p->val)
+        r0 = dummy, r = dummy->next;
+
+        while (r->val < p->val && r != p)
         {
             r0 = r;
             r = r->next;
@@ -42,22 +47,16 @@ node *sort(node *head)
             // 独立
             q = p;
             p0->next = p->next;
-            p = p0;
+            p = p0; //不可省略，最外层while循环要求走完整个链表，此时p被插入到别的位置去了，必须借助p0继续前进
 
-            if (r == head)
-            {
-                q->next = head;
-                head = q;
-            }
-            else
-            {
-                q->next = r;
-                r0->next = q;
-            }
+            q->next = r;
+            r0->next = q;
         }
         p0 = p;
         p = p->next;
     }
+
+    free(dummy);
     return head;
 }
 
