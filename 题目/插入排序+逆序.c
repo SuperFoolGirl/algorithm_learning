@@ -25,6 +25,8 @@ node *create(int n)
     return head;
 }
 
+// head为无哨兵链表的头节点
+// 无哨兵就自己造一个，有就直接用
 node *sort(node *head)
 {
     node *p, *p0, *r, *r0, *q;
@@ -55,7 +57,8 @@ node *sort(node *head)
         p0 = p;
         p = p->next;
     }
-
+    // 必须换成新头节点，head可能被排序移走了
+    head = dummy->next;
     free(dummy);
     return head;
 }
