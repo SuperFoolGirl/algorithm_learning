@@ -27,6 +27,7 @@ node *create(int n)
 
 // head为无哨兵链表的头节点
 // 无哨兵就自己造一个，有就直接用
+// 优化见dummy和sort_with_next.c
 node *sort(node *head)
 {
     node *p, *p0, *r, *r0, *q;
@@ -39,7 +40,7 @@ node *sort(node *head)
     {
         r0 = dummy, r = dummy->next;
 
-        while (r->val < p->val && r != p)
+        while (r != p && r->val < p->val)
         {
             r0 = r;
             r = r->next;

@@ -68,19 +68,37 @@ ListNode *listSort(ListNode *head)
             r_prev = r;
             r = r->next;
         }
+
+        // 关于这里的讲解，参考sort_with_next.c
+        // if (r != p)
+        // {
+        //     // 独立
+        //     q = p;
+        //     p_prev->next = p->next;
+        //     p = p_prev; // 不可省略，最外层while循环要求走完整个链表，此时p被插入到别的位置去了，必须借助p0继续前进
+
+        //     // 插入
+        //     q->next = r;
+        //     r_prev->next = q;
+        // }
+        // p_prev = p;
+        // p = p->next;
+
+        // 优化
         if (r != p)
         {
-            // 独立
             q = p;
             p_prev->next = p->next;
-            p = p_prev; // 不可省略，最外层while循环要求走完整个链表，此时p被插入到别的位置去了，必须借助p0继续前进
+            p = p_prev->next;
 
-            // 插入
             q->next = r;
             r_prev->next = q;
         }
-        p_prev = p;
-        p = p->next;
+        else
+        {
+            p_prev = p;
+            p = p->next;
+        }
     }
     // 销毁虚拟哨兵
     head = dummy->next;
