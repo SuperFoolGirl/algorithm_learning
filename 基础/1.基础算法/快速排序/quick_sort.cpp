@@ -8,6 +8,9 @@ const int N = 100010;
 int n;
 int q[N];
 
+// 这个写法边界条件很严格，如果需要的话考虑直接背过
+// 那我为什么不用sort呢
+
 void quick_sort(int l, int r) {
     if (l >= r) {
         return;
@@ -15,6 +18,9 @@ void quick_sort(int l, int r) {
 
     int x = q[l], i = l - 1, j = r + 1;
     while (i < j) {
+        // 这里必须写成do while，因为每次新循环都要无条件走一步
+        // 如果用while的话，可能会卡死
+
         // 找到左边大于等于 x 的位置
         do {
             i++;
