@@ -1,3 +1,5 @@
+// 先排序再递归
+
 #include <iostream>
 #include <cstring>
 #include <algorithm>
