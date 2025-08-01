@@ -6,6 +6,7 @@ using namespace std;
 
 // 用A的每一位与B相乘，而不是B的每一位
 // 如果是高精度×高精度的话，就需要逐位相乘再相加了
+// 这里把B看成一个整体
 vector<int> mul(vector<int> &A, int b) {
     vector<int> C;
     int carry = 0;

@@ -1,29 +1,27 @@
+#include <algorithm>
 #include <cstdio>
 #include <vector>
-#include <algorithm>
+
 
 using namespace std;
 
-bool check(int x, vector<int> &trees, int n, int k)
-{
+bool check(int x, vector<int> &trees, int n, int k) {
     int sum = 0;
-    for (auto i : trees)
-    {
+    for (auto i : trees) {
         sum += i / x;
-        if (sum >= k)
+        if (sum >= k) {
             return true;
+        }
     }
     return sum >= k;
 }
 
-int main()
-{
+int main() {
     int n, k;
     scanf("%d %d", &n, &k);
     vector<int> trees(n);
     int max_tree = 0;
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         scanf("%d", &trees[i]);
         max_tree = max(max_tree, trees[i]);
     }
@@ -32,18 +30,19 @@ int main()
     // 长度越短，分割的的段数越多
     // 因此蓝色区域在左边
     int l = 0, r = max_tree + 1;
-    while (l + 1 < r)
-    {
+    while (l + 1 < r) {
         int mid = l + r >> 1;
-        if (check(mid, trees, n, k))
+        if (check(mid, trees, n, k)) {
             l = mid;
-        else
+        } else {
             r = mid;
+        }
     }
 
-    if (check(r, trees, n, k))
+    if (check(r, trees, n, k)) {
         printf("%d\n", r);
-    else
+    } else {
         printf("%d\n", l);
+    }
     return 0;
 }
