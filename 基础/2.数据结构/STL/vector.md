@@ -1,0 +1,9 @@
+### vector
+> 倍增思想，这部分不过多赘述，参考模拟实现或源码
+- `size()`与`empty()`是所有容器公有的方法
+- `clear()`
+- `push_back()`/`pop_back()`
+- `begin()`/`end()`，返回迭代器
+- `front()`/`back()`，返回元素
+- `operator[]`
+- 支持比较运算，两个vector直接比较，根据元素字典序

@@ -1,0 +1,11 @@
+### 双端队列
+> 队头、队尾都可以插入和删除元素，还支持随机访问
+> 可以认为是增强版的vector
+> 缺点在于效率较低，不适应算法竞赛环境
+- `size()`与`empty()`是所有容器公有的方法
+- `clear()`
+- `push_back()`/`pop_back()`
+- `push_front()`/`pop_front()`
+- `front()`/`back()`
+- `begin()`/`end()`，返回迭代器
+- `operator[]`，随机访问
