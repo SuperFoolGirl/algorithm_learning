@@ -6,37 +6,39 @@
 快速幂的思路是把指数n转为二进制形式，例如，计算a^11，11的二进制是1011，也就是
 11 = 1 * 2^3 + 0 * 2^2 + 1 * 2^1 + 1 * 2^0
 所以可以转化为a^11 = a^(1 * 2^3) * a^(0 * 2^2) * a^(1 * 2^1) * a^(1 * 2^0)
+可以看到，指数被分解成了若干个2的幂次，这也是qmi函数中a = (a * a) % p的原因
 由于是二进制，每位要么是0，要么是1，所以可以用位运算来判断每一位是否为1
 */
 
 #include <iostream>
+
 using namespace std;
 
-// 快速幂函数，计算a的b次方
-long long fastPower(int a, int b)
-{
-    long long result = 1;
-    while (b > 0)
-    {
-        // 如果b的二进制位最后一位是1，那这一位得乘进去
-        if (b & 1)
-        {
-            result *= (long long)a;
-        }
+typedef long long LL;
 
-        // 让a自乘，a的幂次变为原来的2倍：a变成a^2，a^2变成a^4，来模拟快速幂指数处的变化
-        // 每轮都要执行，不管乘没乘进去
-        a *= a;
-        // 右移b，相当于b除以2，用于检查下一位二进制位
-        b >>= 1; // 复合运算操作符，b = b / 2
+// Quick Multiple Inversion
+// a^b%p
+// 由于返回取模的结果，因此返回值是int类型
+int qmi(int a, int b, int p) {
+    int res = 1;    // 2^0
+    while (b) {
+        if (b & 1) {
+            res = (LL)res * a % p;
+        }
+        // 不论这一轮a用不用，都是要自乘的。因为分解a^b时，分解的项总是a^0,a^2,a^4...即a^(2^k)的形式
+        // 而这可以用自乘来得到每一轮的项，然后由b这一位的01情况来选择是用还是不用
+        a = (a * a) % p;
+        b >>= 1;    // 复合运算操作符，b = b / 2
     }
-    return result;
+    return res;
 }
-int main()
-{
-    int base = 3;
-    int exponent = 5;
-    long long result = fastPower(base, exponent);
-    cout << base << " 的 " << exponent << " 次方是: " << result << endl;
+
+int main() {
+    int a, b, p;
+    cin >> a >> b >> p;
+
+    int res = qmi(a, b, p);
+    cout << res << endl;
+
     return 0;
 }
