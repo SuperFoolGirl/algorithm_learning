@@ -26,7 +26,7 @@ vector<int> div(vector<int> &A, int b, int &r) {
 }
 
 int main() {
-    // 高精度 × 整数
+    // 高精度 / 整数
     string a;
     int b;
     vector<int> A;
