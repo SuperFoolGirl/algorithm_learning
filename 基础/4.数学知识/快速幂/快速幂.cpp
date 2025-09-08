@@ -22,6 +22,7 @@ typedef long long LL;
 int qmi(int a, int b, int p) {
     int res = 1;    // 2^0
     while (b) {
+        // 遍历b的每一位，b的二进制01就代表取或不取
         if (b & 1) {
             res = (LL)res * a % p;
         }
