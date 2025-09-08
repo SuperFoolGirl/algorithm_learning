@@ -12,11 +12,11 @@ vector<int> div(vector<int> &A, int b, int &r) {
     // 但加减乘中，数组都是倒序存储的
     // 这里为了延续前面的习惯，注意一下顺序
     for (int i = A.size() - 1; i >= 0; --i) {
-        r = r * 10 + A[i];     // 逐位构建被除数
-        C.push_back(r / b);    // 商
-        r %= b;                // 更新余数
+        r = r * 10 + A[i];     // 落下来新的数后，前面的部分乘10
+        C.push_back(r / b);    // r/b下取整就是商
+        r %= b;                // 更新余数，其实就是 r-(r/b)*b，符合正常除法工作流程，其中r/b自动下取整
     }
-    // 反转商
+    // 当前数组是顺序存储结果的，但高位可能存在前导零，所以反转商来进行前导零的去除
     reverse(C.begin(), C.end());
     // 去除前导零
     while (C.size() > 1 && C.back() == 0) {
@@ -39,7 +39,7 @@ int main() {
     int r;    // 余数
     auto C = div(A, b, r);
 
-    // 输出商和余数
+    // 输出商和余数，在div函数中反转正确的商了，所以这里再反转，负负得正
     for (int i = C.size() - 1; i >= 0; --i) {
         cout << C[i];
     }
