@@ -1,11 +1,10 @@
-// 用e[N] 来存储value，ne[N] 来表示某点的next。其中ne[x] = -1表示x是链表的尾节点。
-// 就这样，用两个数组来模拟一个单链表
+// head = 边，e[边] = 值，ne[边] = 边。其中ne[x] = -1表示x是链表的尾节点。
+// 就这样，用两个数组来模拟一个单链表，即静态链表
 // 邻接表就是一组单链表的集合，用于存储树、图
 
 #include <algorithm>
 #include <cstring>
 #include <iostream>
-
 
 using namespace std;
 

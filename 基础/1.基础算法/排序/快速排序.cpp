@@ -1,8 +1,9 @@
 // 先排序再递归
 
-#include <iostream>
-#include <cstring>
 #include <algorithm>
+#include <cstring>
+#include <iostream>
+
 
 using namespace std;
 
@@ -23,14 +24,20 @@ void quick_sort(int l, int r) {
         // 这里必须写成do while，因为每次新循环都要无条件走一步
         // 如果用while的话，可能会卡死
 
-        // 找到左边大于等于 x 的位置
-        do {
-            i++;
-        } while (q[i] < x);
-        // 找到右边小于等于 x 的位置
-        do {
-            j--;
-        } while (q[j] > x);
+        // // 找到左边大于等于 x 的位置
+        // do {
+        //     i++;
+        // } while (q[i] < x);
+        // // 找到右边小于等于 x 的位置
+        // do {
+        //     j--;
+        // } while (q[j] > x);
+
+        while (q[++i] < x)
+            ;
+        while (q[--j] > x)
+            ;
+
         // 交换这两个位置的元素
         if (i < j) {
             swap(q[i], q[j]);

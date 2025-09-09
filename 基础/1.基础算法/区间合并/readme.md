@@ -8,8 +8,8 @@
 3. 遍历所有区间，对于每个区间：
    - 如果结果数组为空，或者当前区间与结果数组中的**最后一个区间**没有交集，则直接将当前区间加入结果数组。
    - 如果有交集，则需要合并当前区间和结果数组中的最后一个区间，更新最后一个区间的终点。
-     - 如果**当前区间**的**右端点**$>$结果数组中**最后一个区间**的**右端点**，则更新最后一个区间的右端点为当前区间的右端点。
-     - 否则，**当前区间**的**右端点**$<=$结果数组中**最后一个区间**的**右端点**，不需要更新。
+     - 如果**当前区间**的**右端点 **$\gt$ 结果数组中**最后一个区间**的**右端点**，则更新最后一个区间的右端点为当前区间的右端点。
+     - 否则，**当前区间**的**右端点** $\le$ 结果数组中**最后一个区间**的**右端点**，不需要更新。
 4. 返回结果数组。
 ```c++
 void mergeIntervals(vector<pair<int, int>>& intervals) {
@@ -17,14 +17,14 @@ void mergeIntervals(vector<pair<int, int>>& intervals) {
     sort(intervals.begin(), intervals.end());
     
     vector<pair<int, int>> merged;
-    // 第一个区间直接加入结果数组
+    // 第一个区间直接加入结果数组，它的左端点是最小的；所以后面进来的就不用与它的左端点相比了
     merged.push_back(intervals[0]);
     
     for (int i = 1; i < intervals.size(); i++) {
-        auto& last = merged.back();
+        auto& last = merged.back();  // 结果数组中的最后一个
         auto& current = intervals[i];
         
-        // 如果有交集，合并区间
+        // 如果有交集，合并区间；如果没有，直接加入结果数组
         if (current.first <= last.second) {
             last.second = max(last.second, current.second);
         } else {
@@ -32,6 +32,6 @@ void mergeIntervals(vector<pair<int, int>>& intervals) {
         }
     }
     
-    intervals = merged; // 更新原数组
+    intervals = merged; // 最后更新原数组，使得调用处的引用得以更新
 }
 ```

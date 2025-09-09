@@ -10,7 +10,7 @@ int a[N], s[N];
 
 int main() {
     cin >> n >> m;
-    // 前缀和数组，s[i]表示前i个数的和
+    // 前缀和数组，s[i]表示前i个数的和。注意细节，循环变量i从1开始
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
         s[i] = s[i - 1] + a[i];
