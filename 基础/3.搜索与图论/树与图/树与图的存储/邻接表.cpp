@@ -36,8 +36,8 @@ int h[N], e[M], ne[M], idx;
 // 如果是无向图，那就调用两次add，加入两条边
 void add(int a, int b) {
     e[idx] = b;
-    ne[idx] = h[a];    // b取代原先的头结点h[a]，h[a]成为b的后继
-    h[a] = idx++;      // 更新a的头结点为b，然后idx自增
+    ne[idx] = h[a];    // b取代原先的第一条出边h[a]，h[a]成为b的后继
+    h[a] = idx++;      // 更新b为第一条出边，然后idx自增
 }
 
 int main() {
