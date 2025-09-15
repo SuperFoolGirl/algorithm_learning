@@ -55,12 +55,12 @@ int dijkstra() {
         for (int j = 1; j <= n; j++) {
             d[j] = min(d[j], d[t] + g[t][j]);    // 这种更新操作有一个名词：松弛操作
         }
-
-        if (d[n] == 0x3f3f3f3f) {                // 终点不可达，则返回-1
-            return -1;
-        } else {
-            return d[n];
-        }
+    }
+    
+    if (d[n] == 0x3f3f3f3f) {                    // 终点不可达，则返回-1
+        return -1;
+    } else {
+        return d[n];
     }
 }
 
