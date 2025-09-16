@@ -66,7 +66,7 @@ int main() {
         add(a, b), add(b, a);    // 无向图加两次
     }
 
-    // 遍历所有点
+    // 遍历所有点，实际是为了遍历所有的连通分支
     bool flag = true;
     for (int i = 1; i <= n; i++) {
         if (color[i] == 0) {
