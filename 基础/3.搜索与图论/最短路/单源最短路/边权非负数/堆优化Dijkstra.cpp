@@ -48,6 +48,7 @@ int dijkstra() {
     d[1] = 0;
 
     // PII的first值为距离，second值为点编号
+    // 注意，dist不可直接优化掉。因为d[]可能因为松弛操作而改变，所以需要直接push进去
     priority_queue<PII, vector<PII>, greater<PII>> heap;
     heap.push({0, 1});    // 将起点加入堆
 
