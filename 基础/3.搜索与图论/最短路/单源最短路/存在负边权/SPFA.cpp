@@ -42,6 +42,7 @@ int spfa() {
 
     queue<int> q;
     q.push(1);
+    // 所有在队列中的点，st数组都为true；反之则为false
     st[1] = true; // 防止队列中存储重复的点，但注意spfa算法中，节点可以多次入队
 
     while (!q.empty()) {
@@ -52,7 +53,7 @@ int spfa() {
 
         for (int i = h[t]; i != -1; i = ne[i]) {
             int j = e[i];
-            // 如果拓展出去的边，使得路径更短，就加入到队列中
+            // 如果拓展出去的边，使得路径更短，就加入到队列中。可以将j视为中转点
             if (d[j] > d[t] + w[i]) {
                 d[j] = d[t] + w[i];
 

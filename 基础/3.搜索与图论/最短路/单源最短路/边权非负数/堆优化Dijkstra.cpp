@@ -47,26 +47,30 @@ int dijkstra() {
     memset(d, 0x3f, sizeof d);
     d[1] = 0;
 
-    // PII的first值为距离，second值为点编号
+    // PII的first值为距离，second值为点编号。不能交换，因为距离需要作为堆的比较依据
     // 注意，dist不可直接优化掉。因为d[]可能因为松弛操作而改变，所以需要直接push进去
-    priority_queue<PII, vector<PII>, greater<PII>> heap;
-    heap.push({0, 1});    // 将起点加入堆
+    priority_queue<PII, vector<PII>, greater<PII>> heap;    // 小根堆
+    heap.push({0, 1});                                      // 将起点加入堆
 
     while (!heap.empty()) {
         auto t = heap.top();
         heap.pop();
 
         int dist = t.first, node = t.second;
+
+        // 注意，对于vis的判断，dijkstra必须写在此处，不能写进for循环里
+        // 即在第一次出队后，立刻置为true，因为dijkstra是一次定终身
         // 如果当前节点已经在最短路中，跳过
         if (st[node]) {
             continue;
         }
+        st[node] = true;    // 标记当前节点已经在最短路中
 
         // 从t开始扩展与自己相邻的边
-        for (int i = h[node]; i != -1; i = ne[i]) { // 注意，h数组是用点编号来索引的
+        for (int i = h[node]; i != -1; i = ne[i]) {    // 注意，h数组是用点编号来索引的
             int j = e[i];
             // 如果拓展出去的边，使得路径更短，就加入到堆中
-            if (d[j] > dist + w[i]) { // 注意，w是以idx来索引的，而h记录的就是idx
+            if (d[j] > dist + w[i]) {    // 注意，w是以idx来索引的，而h记录的就是idx
                 d[j] = dist + w[i];
                 heap.push({d[j], j});    // 更新距离并将新节点加入堆
             }

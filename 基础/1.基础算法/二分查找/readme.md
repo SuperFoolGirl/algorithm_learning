@@ -56,11 +56,9 @@
 isBlue函数写法很灵活，是根据自己划红蓝分界线的条件来写的，没有固定模板
 
 ```c++
-int binary_search_for_left_is_blue(int *arr, int len, int x)
-{
+int binary_search_for_left_is_blue(int *arr, int len, int x) {
     int l = -1, r = len;
-    while (l + 1 < r)
-    {
+    while (l + 1 < r) {
         int mid = l + r >> 1;
         if (isBlue(arr[mid], x))
             l = mid; // 左边是蓝，所以isBlue为真，l变化
@@ -73,11 +71,9 @@ int binary_search_for_left_is_blue(int *arr, int len, int x)
     return -1;
 }
 
-int binary_search_for_right_is_blue(int *arr, int len, int x)
-{
+int binary_search_for_right_is_blue(int *arr, int len, int x) {
     int l = -1, r = len;
-    while (l + 1 < r)
-    {
+    while (l + 1 < r) {
         int mid = l + r >> 1;
         if (isBlue(arr[mid], x))
             r = mid; // 右边是蓝，所以isBlue为真，r变化
