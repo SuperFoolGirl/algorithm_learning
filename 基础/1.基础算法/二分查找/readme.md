@@ -66,7 +66,8 @@ int binary_search_for_left_is_blue(int *arr, int len, int x) {
             r = mid;
     }
     // 这里分界线自己判断，本模板默认取l
-    if (arr[l] == x)
+    // 注意 还需要判断索引是否越界
+    if (l >= 0 && l < len && arr[l] == x)
         return l;
     return -1;
 }
@@ -80,7 +81,7 @@ int binary_search_for_right_is_blue(int *arr, int len, int x) {
         else
             l = mid;
 	}
-    if (arr[l] == x)
+    if (l >= 0 && l < len && arr[l] == x)
         return l;
     return -1;
 }
