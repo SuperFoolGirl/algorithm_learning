@@ -31,7 +31,7 @@ const int N = 1e5 + 10, M = 2 * N;
 
 int n, m;
 int h[N], e[M], ne[M], idx;
-int w[N];    // w[i]存储边i的权重
+int w[M];    // w[i]存储边i的权重
 int d[N];
 bool st[N];
 
