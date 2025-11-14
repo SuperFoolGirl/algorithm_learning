@@ -9,9 +9,9 @@ using namespace std;
 
 typedef long long LL;
 
-const int N = 1e5 + 10;
+const int N = 1e5 + 10, M = 2 * N;
 
-int h[N], e[N], ne[N], idx;
+int h[N], e[M], ne[M], idx;
 int he[N];    // 统计全局高度
 
 void add(int a, int b) {

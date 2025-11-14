@@ -14,9 +14,9 @@ using namespace std;
 
 typedef long long LL;
 
-const int N = 1e5 + 10;
+const int N = 1e5 + 10, M = 2 * N;
 
-int h[N], e[N], ne[N], idx;
+int h[N], e[M], ne[M], idx;
 
 // 注意，he数组无法统计无向树意义下的全局高度
 // 在代码中，将1号节点作为根节点传入函数

@@ -13,9 +13,9 @@ using namespace std;
 
 typedef long long LL;
 
-const int N = 1e5 + 10;
+const int N = 1e5 + 10, M = N;
 
-int h[N], e[N], ne[N], d[N], idx;
+int h[N], e[M], ne[M], d[N], idx;
 int he[N];
 int root;
 
