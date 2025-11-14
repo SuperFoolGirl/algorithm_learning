@@ -2,6 +2,8 @@
 // 2. 枚举每条边a,b,权重为c。如果ab不连通（ab不在同一集合中），则将其加入最小生成树
 // 集合可以用并查集来维护
 
+// 需要排序所有的边，因此适用于稀疏图
+
 #include <algorithm>
 #include <cstring>
 #include <iostream>
