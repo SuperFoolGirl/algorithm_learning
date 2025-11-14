@@ -17,7 +17,12 @@ typedef long long LL;
 const int N = 1e5 + 10;
 
 int h[N], e[N], ne[N], idx;
+
+// 注意，he数组无法统计无向树意义下的全局高度
+// 在代码中，将1号节点作为根节点传入函数
+// 那么he数组统计的就是以1号节点为根节点的子树高度
 int he[N];
+
 int res;    // 维护直径答案
 
 void add(int a, int b) {
