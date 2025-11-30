@@ -18,6 +18,8 @@
 #include <algorithm>
 #include <cstring>
 #include <iostream>
+#include <queue>
+#include <vector>
 
 using namespace std;
 
@@ -25,6 +27,7 @@ const int N = 1e5 + 10, M = 2 * N;
 int n, m;
 int h[N], e[M], ne[M], idx;
 int d[N], q[N];    // d为入度数组
+vector<int> res;
 
 void add(int a, int b) {
     e[idx] = b;
@@ -38,16 +41,19 @@ bool topo_sort() {
     // 把入度为0的点放到队列里
     // 注意，当没有起点入队时，tt要改为-1，来使得q[++tt]的一致性成立
     // 有起点入队，直接令tt=0，然后赋值q[0]即可。这种场景用在bfs比较多，不过建议直接统一初始化为-1来统一代码逻辑
-    int hh = 0, tt = -1;
-
+    queue<int > q;
     for (int i = 1; i <= n; i++) {
         if (!d[i]) {
-            q[++tt] = i;
+            q.push(i);
         }
     }
 
-    while (hh <= tt) {
-        int t = q[hh++];
+    while (!q.empty()) {
+        int t = q.front();
+        q.pop();
+
+        // 将t加入拓扑序列，在取出队列元素后加入，可以保证不重不漏
+        res.push_back(t);
 
         // 找到所有出边
         for (int i = h[t]; i != -1; i = ne[i]) {
@@ -56,13 +62,12 @@ bool topo_sort() {
             d[j]--;
             // 如果入度改变后，出现了新的入度为0的点，那就加入队列
             if (d[j] == 0) {
-                q[++tt] = j;    // j是e数组的元素。e[idx]存储的是 索引为idx的这条边 所指向的目标节点，即出边指向的点。队列里放的是点
+                q.push(j);    // j是e数组的元素。e[idx]存储的是 索引为idx的这条边 所指向的目标节点，即出边指向的点。队列里放的是点
             }
         }
     }
 
-    // 数组模拟的队列，并没有真正出队，而是头指针不断后移。出队的元素依然保留了
-    return tt == n - 1; // 0下标是第一个元素，队列里有n-1下标说明全部入队了
+    return res.size() == n;
 }
 
 int main() {
@@ -79,7 +84,7 @@ int main() {
     if (topo_sort()) {
         // 打印拓扑排序的n个点
         for (int i = 0; i < n; i++) {
-            cout << q[i] << " ";
+            cout << res[i] << " ";
         }
     } else {
         puts("-1");
