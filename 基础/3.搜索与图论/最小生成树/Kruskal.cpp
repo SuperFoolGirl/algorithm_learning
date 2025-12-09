@@ -18,7 +18,9 @@ int n, m;
 int p[N];
 
 struct Edge {
-    int a, b, w;
+    int a;
+    int b;
+    int w;
 
     // 需要提供比较函数
     bool operator<(const Edge &W) const {
