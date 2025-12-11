@@ -33,7 +33,6 @@ int n, m;
 int h[N], e[M], ne[M], idx;
 int w[M];    // w[i]存储边i的权重
 int d[N];
-bool st[N];
 
 void add(int a, int b, int c) {
     e[idx] = b;
@@ -58,23 +57,25 @@ int dijkstra() {
 
         int dist = t.first, node = t.second;
 
-        // 剪枝
+        // 这里的剪枝是一定可以成立的
+        // 优先队列保证，第一次访问node时，dist一定是该node的最短路（“各种bfs变种问题”）
         if (node == n) {
             return dist;
         }
 
-        // dijkstra是基于贪心思想的，一旦一个点被加入最短路集合，就已经确定最短了，不能再修改了
-        // 但是，不能放到下面for循环里，像很多BFS题目那样，只要遇到就标记
-        // 因为，node被push进堆后，下一次不一定立刻就会pop出来；这个node可能还要被多次松弛操作，更新距离并重新push进堆
+        // 在“各种bfs变种问题”中，这里的剪枝讲得比较清楚
+        // node被push进堆后，下一次不一定立刻就会pop出来；这个node可能还要被多次松弛操作，更新距离并重新push进堆
         // 这个多次松弛是关键，某个点可能是被多次松弛后才最终确定最短路的，这也是此前一直忽略的点
         // 此时堆里会有多个node，但距离各不相同。显然，距离小的会被先pop出来，然后标记后，其他node就不能再更新了
-        
         // 因此，这里的条件可以改为 d[node] < dist，语义上不如st数组清晰，但与松弛条件进行统一了
-        // 这个点要好好体会，不可一知半解
-        if (st[node]) {
+        // if (st[node]) {
+        //     continue;
+        // }
+        // st[node] = true;    // 标记当前节点已经在最短路中
+
+        if (dist > d[node]) {
             continue;
         }
-        st[node] = true;    // 标记当前节点已经在最短路中
 
         // 从t开始扩展与自己相邻的边
         for (int i = h[node]; i != -1; i = ne[i]) {    // 注意，h数组是用点编号来索引的
