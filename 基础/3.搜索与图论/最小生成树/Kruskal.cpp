@@ -8,7 +8,6 @@
 #include <cstring>
 #include <iostream>
 
-
 using namespace std;
 
 typedef long long LL;
@@ -23,13 +22,13 @@ struct Edge {
     int w;
 
     // 需要提供比较函数
-    bool operator<(const Edge &W) const {
+    bool operator<(const Edge& W) const {
         return w < W.w;
     }
 } edges[N];
 
 int find(int x) {
-    if (p[x] != x) { // 只有祖宗节点才满足p[u]=u。如果不是祖宗节点，就继续往上找
+    if (p[x] != x) {    // 只有祖宗节点才满足p[u]=u。如果不是祖宗节点，就继续往上找
         p[x] = find(p[x]);
     }
     return p[x];
@@ -48,12 +47,12 @@ int kruskal() {
 
     // 找边来组织最小生成树
     for (int i = 0; i < m; i++) {
-        int a = edges[i].a, b = edges[i].b, w = edges[i].w;
-        a = find(a), b = find(b);
-        if (a != b) {
-            p[a] = b;    // 合并两个集合
-            res += w;    // 加入边权
-            cnt++;       // 边数加一
+        int pa = find(edges[i].a);
+        int pb = find(edges[i].b);
+        if (pa != pb) {
+            p[pa] = pb;           // 合并两个集合
+            res += edges[i].w;    // 加入边权
+            cnt++;                // 边数加一
         }
 
         // 如果边数已经达到n-1，说明最小生成树已经构成
