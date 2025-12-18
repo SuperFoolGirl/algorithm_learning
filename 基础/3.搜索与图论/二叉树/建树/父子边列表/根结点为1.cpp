@@ -9,9 +9,10 @@ using namespace std;
 const int N = 1e5 + 10;
 
 // 二叉树节点结构：值、左右子节点（-1表示无）
+// 如果节点编号从1开始，那么可以用0来表示空节点
 struct Node {
-    int l = -1;
-    int r = -1;
+    int l;
+    int r;
 } tr[N];
 
 int n;        // 节点总数（1~n）
@@ -19,17 +20,17 @@ int fa[N];    // 可选：记录父节点（树形DP/路径题需要）
 
 // 添加边：a是父节点，b是子节点，自动填充左/右子节点（先左后右）
 void add(int a, int b) {
-    if (tr[a].l == -1) {    // 左子女为空，填左
+    if (!tr[a].l) {    // 左子女为空，填左
         tr[a].l = b;
-    } else {                // 左子女已存在，填右（二叉树最多2个子节点）
+    } else {           // 左子女已存在，填右（二叉树最多2个子节点）
         tr[a].r = b;
     }
-    fa[b] = a;              // 可选
+    fa[b] = a;         // 可选
 }
 
 // 前序遍历（根→左→右）
 void preOrder(int u) {
-    if (u == -1) {
+    if (!u) {
         return;
     }
     cout << u << " ";
@@ -39,7 +40,7 @@ void preOrder(int u) {
 
 // 层序遍历（广度优先）
 void levelOrder(int root) {
-    if (root == -1) {
+    if (!root) {
         return;
     }
     queue<int> q;
@@ -64,7 +65,7 @@ int main() {
     // 输入节点总数
     cin >> n;
 
-    memset(fa, -1, sizeof fa);  // 可选
+    memset(fa, -1, sizeof fa);    // 可选
 
     // 输入n-1条边（任意顺序，a是父，b是子）
     for (int i = 0; i < n - 1; i++) {
