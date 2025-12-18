@@ -1,3 +1,8 @@
+// 代码前提：
+// 模式串、主串均下标从0开始
+// ne数组含义：ne[i]表示p[0...i]这个子串的最长相等前后缀长度
+// 如果下标从1开始，显著特征是j=ne[j]
+
 #include <iostream>
 #include <string>
 #include <vector>
