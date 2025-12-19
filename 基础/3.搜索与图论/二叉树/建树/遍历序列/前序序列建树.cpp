@@ -11,22 +11,24 @@ const int N = 1e5 + 10;
 // 结构体数组
 struct Node {
     int val;
-    int l = -1;
-    int r = -1;
+    int l;
+    int r;
 } tr[N];
 
-int idx;    // 记录用到了哪个结点，而不是哪条边
+int idx;    // 记录用到了哪个结点，而不是哪条边；不可省略
 
 // 递归构建二叉树，返回根节点的索引
 int buildTree() {
     int val;
     cin >> val;        // 读取当前节点值（前序顺序）
-    if (val == 0) {    // 0表示空节点，返回-1
-        return -1;
+    if (val == 0) {    // 0表示空节点，返回0
+        // 初始化时，l/r均为0，无需重复赋值
+        return 0;
     }
 
     // idx是全局变量，不可用它做返回值。这里必须缓存
     int curr = ++idx;
+
     tr[curr].val = val;    // 创建结点，自己开辟一个新的索引
     // 动态树中，l/r作为参数传入递归函数；静态树中作为左值
     tr[curr].l = buildTree();    // 递归构建左子树，赋值给u的左子节点
@@ -38,8 +40,7 @@ int buildTree() {
 
 // 输入：当前节点索引；输出：前序遍历结果
 void preOrder(int u) {
-    if (u == -1) {    // 空节点，输出0
-        cout << "0 ";
+    if (u == 0) {    // 空节点
         return;
     }
     cout << tr[u].val << " ";    // 访问根节点

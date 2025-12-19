@@ -22,6 +22,15 @@ struct Edge {
     int w;
 
     // 需要提供比较函数
+    // 注意，如果在调用sort时没明确说明greater，则不允许重载>运算符
+    // 默认情况下，只能重载<，实现升序排列
+    // 如果要实现降序排列，可以在sort时指定greater<Edge>，然后重载>运算符
+    // 也可以在operator<中实现降序排列，即return w > W.w。也就是说逻辑不重要，只需要保证名字是operator<
+    // 会发现这一套和堆是完全相反的。这与堆排序的性质有关
+
+    // 总结一下降序排列的方法：
+    // 1. 在sort时指定greater<Edge>，然后重载>运算符
+    // 2. 使用默认的less<Edge>，然后在operator<中实现降序排列
     bool operator<(const Edge& W) const {
         return w < W.w;
     }
