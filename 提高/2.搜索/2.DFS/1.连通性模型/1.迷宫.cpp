@@ -1,4 +1,5 @@
 // 基于连通性的模型，BFS和DFS都能做
+// 无向图，st数组
 
 #include <iostream>
 #include <cstring>
