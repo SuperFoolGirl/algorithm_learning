@@ -1,0 +1,1 @@
+kruskal的泛用性比prim更强；能用prim的图也能用kruskal，但反过来不一定
