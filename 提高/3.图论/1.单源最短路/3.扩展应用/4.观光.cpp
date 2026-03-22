@@ -1,4 +1,4 @@
-// 同时维护最短路劲和次短路径的数量
+// 同时维护最短路径和次短路径的数量
 // 本题可以考虑扩展状态表示，而不再引入更多数组
 // d[i][0/1] 表示到达节点i的最短路/次短路长度
 // cnt[i][0/1] 表示到达节点i的最短路/次短路数量
@@ -19,7 +19,7 @@ const int N = 1010, M = 10010;
 
 struct Ver {
     int ver, type, dist;
-    // Dijkstra是大根堆，需要重载>
+    // 最短路算法，用小根堆，需要降序语义，为了可读性重载>运算符
     bool operator>(const Ver& other) const {
         return dist > other.dist;
     }
