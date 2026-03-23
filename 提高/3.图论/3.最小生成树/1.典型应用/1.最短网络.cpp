@@ -16,6 +16,7 @@ bool st[N];  // st[i]表示i点是否在mst中
 int prim() {
     int res = 0;
     memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;  // 必须得设置一个0作为起点，否则无法执行算法；从1号点开始构建mst
 
     // 每次选出一个点加入mst，n次
     for (int i = 0; i < n; i++) {
