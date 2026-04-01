@@ -9,7 +9,7 @@ def solve():
     ri = lambda: int(next(it))
     rs = lambda: next(it)
 
-    INF = 10 ** 9
+    INF = 10**9
     n, m = ri(), ri()
     g = [[] for _ in range(n + 1)]
     dfn, low, timestamp = [0] * (n + 1), [0] * (n + 1), 0
@@ -40,7 +40,6 @@ def solve():
                 if y == u:
                     break
 
-
     for _ in range(m):
         u, v = ri(), ri()
         g[u].append(v)
@@ -53,7 +52,7 @@ def solve():
         for v in g[u]:
             if id[u] != id[v]:
                 dout[id[u]] += 1
-    
+
     zeros, sum = 0, 0
     for i in range(1, scc_cnt + 1):
         if not dout[i]:

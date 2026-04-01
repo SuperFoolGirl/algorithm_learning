@@ -15,7 +15,7 @@ def solve():
         if p[x] != x:
             p[x] = find(p[x])
         return p[x]
-    
+
     def get_edges():
         dx = [-1, 0, 1, 0]
         dy = [0, 1, 0, -1]
@@ -41,7 +41,7 @@ def solve():
                 p[pa] = pb
                 res += w
         return res
-    
+
     t = 1
     for i in range(1, n + 1):
         for j in range(1, m + 1):
