@@ -7,6 +7,8 @@ const int N = 1e5 + 10;
 int ne[N];
 vector<int> ans;
 
+
+// 0-index版
 bool kmp(string &p, string &s) {
     int n = p.size();    // 模式串p的长度
     int m = s.size();    // 主串s的长度

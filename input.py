@@ -9,9 +9,15 @@ def solve():
     ri = lambda: int(next(it))
     rs = lambda: next(it)
 
+    # [] <=> list()
+    # [0] + [ri() for _ in range(k)]  -> 一维数组 + 一维数组
+    # [0] * n -> [0,0,...,0]
+    # [0 for _ in range(n)] -> [0,0,...,0]
+    # [[0] for _ in range(n)] -> [[0],[0],...,[0]]
+
     # 读入单个变量
     n, m = ri(), ri()
-    
+
     # 读入字符串
     s = rs()
 
