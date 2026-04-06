@@ -12,7 +12,6 @@
 #include <cstring>
 #include <iostream>
 
-
 using namespace std;
 
 typedef long long LL;
@@ -41,12 +40,12 @@ bool dfs(int u, int c) {
         int j = e[i];
 
         // 不能把图完全按二叉树来考虑，对于普通的图，一个节点可能有两个父节点，两个父节点可能共用一个儿子
-        if (color[j] == 0) { // 如果未染色
-            if (!dfs(j, 3 - c)) { // 颜色只有1，2。注意3-c这个写法，很巧妙
+        if (color[j] == 0) {         // 如果未染色
+            if (!dfs(j, 3 - c)) {    // 颜色只有1，2。注意3-c这个写法，很巧妙
                 return false;
             }
-        } else { // 如果已染色，判断矛盾
-            if (color[j] == c) { // 如果儿子和老爸相同，矛盾
+        } else {                     // 如果已染色，判断矛盾。由于跑的是无向图，因此一定会重复访问点，除非用fa剪枝
+            if (color[j] == c) {     // 如果儿子和老爸相同，矛盾
                 return false;
             }
         }
@@ -70,7 +69,7 @@ int main() {
     bool flag = true;
     for (int i = 1; i <= n; i++) {
         if (color[i] == 0) {
-            if (!dfs(i, 1)) { // 如果dfs返回false，说明有矛盾发生
+            if (!dfs(i, 1)) {    // 如果dfs返回false，说明有矛盾发生
                 flag = false;
                 break;
             }

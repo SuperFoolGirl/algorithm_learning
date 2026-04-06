@@ -3,15 +3,12 @@ import heapq  # python只有小根堆
 
 
 def solve():
-    data = sys.stdin.read().split()
-    if not data:
-        return
-    it = iter(data)
+    it = iter(sys.stdin.read().split())
     ri = lambda: int(next(it))
 
     n, m = ri(), ri()
-    # g[a]存储若干个二元组(b,c)，表示a->b的边权为c
-    g = [[] for _ in range(n + 1)]
+    # h[a]存储若干个二元组(b,c)，表示a->b的边权为c
+    h = [[] for _ in range(n + 1)]
 
     def dijkstra(start):
         # dist列表的元素是基础类型，即不可变对象，直接浅拷贝即可
@@ -22,7 +19,9 @@ def solve():
         dist[start] = 0
 
         # 定义heap列表作为堆，它只是列表
+        # 注意，必须让距离作为堆元素的第一个值，因为这是默认排序字段
         heap = [(0, start)]
+
         while heap:
             d, u = heapq.heappop(heap)
 
@@ -31,16 +30,16 @@ def solve():
             if d > dist[u]:
                 continue
 
-            for v, w in g[u]:
-                if dist[v] > dist[u] + w:
-                    dist[v] = dist[u] + w
+            for v, w in h[u]:
+                if dist[v] > d + w:
+                    dist[v] = d + w
                     heapq.heappush(heap, (dist[v], v))
         return dist[n]
 
     for _ in range(m):
         a, b, c = ri(), ri(), ri()
-        # g[i]->[(a,b),(c,d),...]
-        g[a].append((b, c))
+        # h[i]->[(a,b),(c,d),...]
+        h[a].append((b, c))  # 干掉了add
 
     res = dijkstra(1)
     # 三元表达式
