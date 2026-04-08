@@ -34,7 +34,7 @@
 
 using namespace std;
 
-const int N = 1e4 + 10, M = 2 * N;
+const int N = 1e5 + 10, M = 2 * N;
 
 int n;
 int h[N], e[M], ne[M], idx;
@@ -53,7 +53,6 @@ int dfs(int u, int fa) {
     int dist = 0;
 
     // 统计u往下走达到的的最长距离、次长距离
-    // 注意d1其实就是dist
     int d1 = 0, d2 = 0;
 
     for (int i = h[u]; i != -1; i = ne[i]) {
@@ -61,8 +60,11 @@ int dfs(int u, int fa) {
         if (j == fa) {
             continue;
         }
-        int d = dfs(j, u);
-        dist = max(dist, d + w[i]);
+        // 本轮计算出的u向下能走到的最远距离
+        int d = dfs(j, u) + w[i];
+
+        // 每轮打擂台，存储u向下能走到的最远距离
+        dist = max(dist, d);
 
         if (d >= d1) {
             d2 = d1;

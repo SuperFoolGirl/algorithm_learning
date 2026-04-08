@@ -23,7 +23,7 @@ int prim() {
         int t = -1;
         // 枚举所有点，打擂台找出本轮加入mst的点t
         for (int j = 1; j <= n; j++) {
-            if (!st[j] && (t == -1 || dist[t] < dist[j])) {
+            if (!st[j] && (t == -1 || dist[t] > dist[j])) {
                 t = j;
             }
         }

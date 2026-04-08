@@ -30,7 +30,7 @@ void bfs(int root) {
         for (int i = h[t]; ~i; i = ne[i]) {
             int j = e[i];
             
-            // 宽搜用松弛的思想来更新深度
+            // 这是无向图，需要判断是否访问过，防止死循环
             if (depth[j] > depth[t] + 1) {
                 depth[j] = depth[t] + 1;
                 q[++tt] = j;
